@@ -10,3 +10,4 @@ backups:    ; bash scripts/60_backups_install.sh
 status:     ; bash scripts/90_status.sh
 all: init envs traefik db erpnext site alias backups status
 stop:       ; bash scripts/80_stop.sh all
+system-settings: ; bash scripts/42_site_system_settings.sh
