@@ -6,7 +6,6 @@ db:         ; bash scripts/20_mariadb_up.sh
 erpnext:    ; bash scripts/30_erpnext_up.sh
 site:       ; bash scripts/40_site_new.sh
 locale:     ; bash scripts/41_site_locale.sh
-alias:      ; bash scripts/50_alias_up.sh
 backups:    ; bash scripts/60_backups_install.sh
 status:     ; bash scripts/90_status.sh
 all: init envs traefik db erpnext site alias backups status
