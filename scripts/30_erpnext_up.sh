@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 cd "$(dirname "$0")/.."
+docker network inspect erpnext-one >/dev/null 2>&1 || docker network create erpnext-one
+
 docker compose --project-name erpnext-one \
   --env-file env/erpnext.env \
   -f vendor/frappe_docker/compose.yaml \
