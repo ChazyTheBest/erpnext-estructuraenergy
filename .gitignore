@@ -1,0 +1,6 @@
+env/
+secrets/
+vendor/
+compose/erpnext-one.yaml
+compose/alias-www-nohyphen.yaml
+.DS_Store
