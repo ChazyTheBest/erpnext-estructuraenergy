@@ -6,16 +6,20 @@ cd "$(dirname "$0")/.."
 docker network inspect erpnext-one >/dev/null 2>&1 || docker network create erpnext-one
 
 dashboard_mode="${TRAEFIK_DASHBOARD:-off}"
-compose_overlays=(
-  -f vendor/frappe_docker/overrides/compose.traefik.yaml
-  -f vendor/frappe_docker/overrides/compose.traefik-ssl.yaml
+compose_files=()
+if [[ "$dashboard_mode" == "on" ]]; then
+  compose_files+=(
+    -f vendor/frappe_docker/overrides/compose.traefik.yaml
+    -f vendor/frappe_docker/overrides/compose.traefik-ssl.yaml
+  )
+else
+  compose_files+=(-f compose/traefik.base.yaml)
+fi
+compose_files+=(
   -f compose/traefik.hsts-redirects.yaml
   -f compose/traefik.network.yaml
 )
-if [[ "$dashboard_mode" != "on" ]]; then
-  compose_overlays+=(-f compose/traefik.dashboard-off.yaml)
-fi
 
 docker compose --project-name traefik \
   --env-file env/traefik.env \
-  "${compose_overlays[@]}" up -d
+  "${compose_files[@]}" up -d
