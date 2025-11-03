@@ -3,8 +3,6 @@ set -euo pipefail
 
 cd "$(dirname "$0")/.."
 
-docker_bin="$(command -v docker || true)"
-
 info() {
   printf '==> %s\n' "$*"
 }
@@ -12,6 +10,67 @@ info() {
 warn() {
   printf 'WARN: %s\n' "$*" >&2
 }
+
+fatal() {
+  printf 'ERROR: %s\n' "$*" >&2
+  exit 1
+}
+
+usage() {
+  cat <<'EOF'
+Usage: scripts/99_destroy.sh [--force]
+
+Fully tear down the ERPNext deployment, removing containers, networks,
+volumes, generated configuration, vendored dependencies, and backup cron jobs.
+
+Options:
+  --force   Skip interactive confirmations (dangerous).
+  -h, --help  Show this help message and exit.
+EOF
+}
+
+force=0
+while [ "$#" -gt 0 ]; do
+  case "$1" in
+    --force)
+      force=1
+      ;;
+    -h|--help)
+      usage
+      exit 0
+      ;;
+    *)
+      usage >&2
+      exit 1
+      ;;
+  esac
+  shift
+done
+
+if [ "$force" -ne 1 ]; then
+  if [ ! -t 0 ]; then
+    fatal "Interactive confirmations are required. Re-run with --force to bypass prompts."
+  fi
+  printf 'This will remove all ERPNext-related containers, networks, volumes,\n'
+  printf 'generated configuration, secrets, vendored frappe_docker clone, and backup cron jobs.\n'
+  printf 'Continue? [y/N]: '
+  read -r reply
+  case "${reply,,}" in
+    y|yes) ;;
+    *)
+      printf 'Aborted by user.\n'
+      exit 0
+      ;;
+  esac
+  printf 'Type DESTROY to confirm: '
+  read -r second
+  if [ "${second}" != "DESTROY" ]; then
+    printf 'Confirmation token mismatch; aborting.\n'
+    exit 0
+  fi
+fi
+
+docker_bin="$(command -v docker || true)"
 
 destroy_project() {
   local project="$1"
