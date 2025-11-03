@@ -16,6 +16,11 @@ services:
       - traefik.http.routers.r-https-nohyphen.service=noop@internal
       - traefik.http.routers.r-https-nohyphen.tls.certresolver=le
       - traefik.http.routers.r-https-nohyphen.priority=100
+      - traefik.http.routers.r-http-nohyphen.rule=Host(`estructuraest.com`)
+      - traefik.http.routers.r-http-nohyphen.entrypoints=http
+      - traefik.http.routers.r-http-nohyphen.middlewares=to-hyphen
+      - traefik.http.routers.r-http-nohyphen.service=noop@internal
+      - traefik.http.routers.r-http-nohyphen.priority=100
 
       # https://estructura-est.com -> https://www.estructura-est.com
       - traefik.http.middlewares.to-www.redirectregex.regex=^https://estructura-est\.com(.*)
@@ -27,6 +32,11 @@ services:
       - traefik.http.routers.r-https-hyphen.service=noop@internal
       - traefik.http.routers.r-https-hyphen.tls.certresolver=le
       - traefik.http.routers.r-https-hyphen.priority=100
+      - traefik.http.routers.r-http-hyphen.rule=Host(`estructura-est.com`)
+      - traefik.http.routers.r-http-hyphen.entrypoints=http
+      - traefik.http.routers.r-http-hyphen.middlewares=to-www
+      - traefik.http.routers.r-http-hyphen.service=noop@internal
+      - traefik.http.routers.r-http-hyphen.priority=100
 
       # https://www.estructuraest.com -> https://www.estructura-est.com
       - traefik.http.middlewares.www-nohyphen-to-www-hyphen.redirectregex.regex=^https://www\.estructuraest\.com(.*)
@@ -38,3 +48,8 @@ services:
       - traefik.http.routers.r-https-www-nohyphen.service=noop@internal
       - traefik.http.routers.r-https-www-nohyphen.tls.certresolver=le
       - traefik.http.routers.r-https-www-nohyphen.priority=100
+      - traefik.http.routers.r-http-www-nohyphen.rule=Host(`www.estructuraest.com`)
+      - traefik.http.routers.r-http-www-nohyphen.entrypoints=http
+      - traefik.http.routers.r-http-www-nohyphen.middlewares=www-nohyphen-to-www-hyphen
+      - traefik.http.routers.r-http-www-nohyphen.service=noop@internal
+      - traefik.http.routers.r-http-www-nohyphen.priority=100
