@@ -1,0 +1,9 @@
+networks:
+  erpnext-one:
+    external: true
+
+services:
+  database:
+    networks:
+      - mariadb-network
+      - erpnext-one
