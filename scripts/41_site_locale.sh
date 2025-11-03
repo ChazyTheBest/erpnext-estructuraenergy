@@ -7,3 +7,6 @@ docker compose -p erpnext-one -f compose/erpnext-one.yaml exec backend \
 
 docker compose -p erpnext-one -f compose/erpnext-one.yaml exec backend \
   bench --site "${ERP_CANON}" set-config time_zone Europe/Madrid
+
+docker compose -p erpnext-one -f compose/erpnext-one.yaml exec backend \
+  bench --site "${ERP_CANON}" enable-scheduler
