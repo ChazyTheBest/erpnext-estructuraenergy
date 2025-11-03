@@ -11,7 +11,7 @@ services:
       - traefik.http.middlewares.to-hyphen.redirectregex.replacement=https://estructura-est.com$$1
       - traefik.http.middlewares.to-hyphen.redirectregex.permanent=true
       - traefik.http.routers.r-https-nohyphen.rule=Host(`estructuraest.com`)
-      - traefik.http.routers.r-https-nohyphen.entrypoints=websecure
+      - traefik.http.routers.r-https-nohyphen.entrypoints=https
       - traefik.http.routers.r-https-nohyphen.middlewares=hsts,to-hyphen
       - traefik.http.routers.r-https-nohyphen.service=noop@internal
       - traefik.http.routers.r-https-nohyphen.tls.certresolver=le
@@ -27,7 +27,7 @@ services:
       - traefik.http.middlewares.to-www.redirectregex.replacement=https://www.estructura-est.com$$1
       - traefik.http.middlewares.to-www.redirectregex.permanent=true
       - traefik.http.routers.r-https-hyphen.rule=Host(`estructura-est.com`)
-      - traefik.http.routers.r-https-hyphen.entrypoints=websecure
+      - traefik.http.routers.r-https-hyphen.entrypoints=https
       - traefik.http.routers.r-https-hyphen.middlewares=hsts,to-www
       - traefik.http.routers.r-https-hyphen.service=noop@internal
       - traefik.http.routers.r-https-hyphen.tls.certresolver=le
@@ -43,7 +43,7 @@ services:
       - traefik.http.middlewares.www-nohyphen-to-www-hyphen.redirectregex.replacement=https://www.estructura-est.com$$1
       - traefik.http.middlewares.www-nohyphen-to-www-hyphen.redirectregex.permanent=true
       - traefik.http.routers.r-https-www-nohyphen.rule=Host(`www.estructuraest.com`)
-      - traefik.http.routers.r-https-www-nohyphen.entrypoints=websecure
+      - traefik.http.routers.r-https-www-nohyphen.entrypoints=https
       - traefik.http.routers.r-https-www-nohyphen.middlewares=hsts,www-nohyphen-to-www-hyphen
       - traefik.http.routers.r-https-www-nohyphen.service=noop@internal
       - traefik.http.routers.r-https-www-nohyphen.tls.certresolver=le
