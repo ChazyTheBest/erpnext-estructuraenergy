@@ -21,7 +21,9 @@ usage() {
 Usage: scripts/99_destroy.sh [--force]
 
 Fully tear down the ERPNext deployment, removing containers, networks,
-volumes, generated configuration, vendored dependencies, and backup cron jobs.
+volumes (including lingering compose-managed resources), generated docker-compose
+bundle, environment files, secrets, vendored frappe_docker clone, and the backup
+cron job plus /mnt/backups/erpnext contents.
 
 Options:
   --force   Skip interactive confirmations (dangerous).
