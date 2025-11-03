@@ -53,8 +53,9 @@ if [ "$force" -ne 1 ]; then
   if [ ! -t 0 ]; then
     fatal "Interactive confirmations are required. Re-run with --force to bypass prompts."
   fi
-  printf 'This will remove all ERPNext-related containers, networks, volumes,\n'
-  printf 'generated configuration, secrets, vendored frappe_docker clone, and backup cron jobs.\n'
+  printf 'This will remove all ERPNext-related containers, networks, volumes (including leftovers),\n'
+  printf 'generated docker-compose bundle, env files, secrets, vendored frappe_docker clone,\n'
+  printf 'and the backup cron job with /mnt/backups/erpnext contents.\n'
   printf 'Continue? [y/N]: '
   read -r reply
   case "${reply,,}" in
