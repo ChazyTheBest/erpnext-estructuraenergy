@@ -5,7 +5,7 @@ cd "$(dirname "$0")/.."
 mkdir -p env secrets
 
 DASH_PW="$(openssl rand -base64 18)"
-HASH="$(openssl passwd -apr1 "$DASH_PW")"
+HASH="$(openssl passwd -apr1 "$DASH_PW" | sed 's/\$/$$/g')"
 
 cat > env/traefik.env <<EOV
 EMAIL=${ACME_EMAIL}
