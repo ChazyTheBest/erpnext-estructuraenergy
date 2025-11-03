@@ -1,4 +1,4 @@
-.PHONY: init envs traefik db erpnext site locale backups lint all status stop destroy
+.PHONY: init envs traefik db erpnext site locale backups lint all all-nobackup status stop destroy
 init:       ; bash scripts/00_init.sh
 envs:       ; bash scripts/05_render_envs.sh
 traefik:    ; bash scripts/10_traefik_up.sh
@@ -10,5 +10,6 @@ backups:    ; bash scripts/60_backups_install.sh
 lint:       ; bash scripts/lint.sh
 status:     ; bash scripts/90_status.sh
 all: init envs traefik db erpnext site locale backups status
+all-nobackup: init envs traefik db erpnext site locale status
 stop:       ; bash scripts/80_stop.sh all
 destroy:    ; bash scripts/99_destroy.sh
