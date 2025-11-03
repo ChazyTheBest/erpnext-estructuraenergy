@@ -7,14 +7,14 @@ ADMIN_PASS="$(cat secrets/admin_password.txt)"
 SITE_PATH="/home/frappe/frappe-bench/sites/${ERP_CANON}"
 
 site_exists() {
-  docker compose --project-name erpnext-one exec -T backend \
+  docker compose --project-name erpnext-one -f compose/erpnext-one.yaml exec -T backend \
     test -d "${SITE_PATH}"
 }
 
 if site_exists >/dev/null 2>&1; then
   echo "Site ${ERP_CANON} already exists; skipping creation."
 else
-  docker compose --project-name erpnext-one exec backend \
+  docker compose --project-name erpnext-one -f compose/erpnext-one.yaml exec backend \
     bench new-site --mariadb-user-host-login-scope=% \
     --db-root-password "${DB_PASS}" \
     --install-app erpnext \
@@ -27,5 +27,5 @@ if ! site_exists >/dev/null 2>&1; then
   exit 1
 fi
 
-docker compose --project-name erpnext-one exec backend \
+docker compose --project-name erpnext-one -f compose/erpnext-one.yaml exec backend \
   bench --site "${ERP_CANON}" set-config host_name "https://${ERP_CANON}"

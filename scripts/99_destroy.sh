@@ -88,25 +88,25 @@ destroy_project() {
     fi
   fi
 
-  local ids
-  ids="$("$docker_bin" ps -aq --filter "label=com.docker.compose.project=${project}")"
-  if [ -n "$ids" ]; then
+  local ids=()
+  mapfile -t ids < <("$docker_bin" ps -aq --filter "label=com.docker.compose.project=${project}")
+  if [ "${#ids[@]}" -gt 0 ]; then
     info "Removing remaining containers for ${project}"
-    "$docker_bin" rm -fv $ids >/dev/null 2>&1 || warn "failed to remove some containers for ${project}"
+    "$docker_bin" rm -fv "${ids[@]}" >/dev/null 2>&1 || warn "failed to remove some containers for ${project}"
   fi
 
-  local nets
-  nets="$("$docker_bin" network ls -q --filter "label=com.docker.compose.project=${project}")"
-  if [ -n "$nets" ]; then
+  local nets=()
+  mapfile -t nets < <("$docker_bin" network ls -q --filter "label=com.docker.compose.project=${project}")
+  if [ "${#nets[@]}" -gt 0 ]; then
     info "Removing remaining networks for ${project}"
-    "$docker_bin" network rm $nets >/dev/null 2>&1 || warn "failed to remove some networks for ${project}"
+    "$docker_bin" network rm "${nets[@]}" >/dev/null 2>&1 || warn "failed to remove some networks for ${project}"
   fi
 
-  local vols
-  vols="$("$docker_bin" volume ls -q --filter "label=com.docker.compose.project=${project}")"
-  if [ -n "$vols" ]; then
+  local vols=()
+  mapfile -t vols < <("$docker_bin" volume ls -q --filter "label=com.docker.compose.project=${project}")
+  if [ "${#vols[@]}" -gt 0 ]; then
     info "Removing remaining volumes for ${project}"
-    "$docker_bin" volume rm $vols >/dev/null 2>&1 || warn "failed to remove some volumes for ${project}"
+    "$docker_bin" volume rm "${vols[@]}" >/dev/null 2>&1 || warn "failed to remove some volumes for ${project}"
   fi
 }
 
