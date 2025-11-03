@@ -1,0 +1,4 @@
+networks:
+  bench-network:
+    external: true
+    name: ${BENCH_NETWORK}

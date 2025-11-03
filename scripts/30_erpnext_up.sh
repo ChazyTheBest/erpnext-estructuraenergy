@@ -9,6 +9,7 @@ docker compose --project-name erpnext-one \
   -f vendor/frappe_docker/overrides/compose.redis.yaml \
   -f vendor/frappe_docker/overrides/compose.multi-bench.yaml \
   -f vendor/frappe_docker/overrides/compose.multi-bench-ssl.yaml \
+  -f compose/erpnext.network.yaml \
   config > compose/erpnext-one.yaml
 
 docker compose --project-name erpnext-one -f compose/erpnext-one.yaml up -d
