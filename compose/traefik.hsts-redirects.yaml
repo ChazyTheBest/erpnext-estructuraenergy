@@ -7,7 +7,7 @@ services:
       - traefik.http.middlewares.hsts.headers.forceSTSHeader=true
 
       # https://estructuraest.com -> https://estructura-est.com
-      - traefik.http.middlewares.to-hyphen.redirectregex.regex=^https://estructuraest\.com(.*)
+      - traefik.http.middlewares.to-hyphen.redirectregex.regex=^https?://estructuraest\.com(.*)
       - traefik.http.middlewares.to-hyphen.redirectregex.replacement=https://estructura-est.com$$1
       - traefik.http.middlewares.to-hyphen.redirectregex.permanent=true
       - traefik.http.routers.r-https-nohyphen.rule=Host(`estructuraest.com`)
@@ -23,7 +23,7 @@ services:
       - traefik.http.routers.r-http-nohyphen.priority=100
 
       # https://estructura-est.com -> https://www.estructura-est.com
-      - traefik.http.middlewares.to-www.redirectregex.regex=^https://estructura-est\.com(.*)
+      - traefik.http.middlewares.to-www.redirectregex.regex=^https?://estructura-est\.com(.*)
       - traefik.http.middlewares.to-www.redirectregex.replacement=https://www.estructura-est.com$$1
       - traefik.http.middlewares.to-www.redirectregex.permanent=true
       - traefik.http.routers.r-https-hyphen.rule=Host(`estructura-est.com`)
@@ -39,7 +39,7 @@ services:
       - traefik.http.routers.r-http-hyphen.priority=100
 
       # https://www.estructuraest.com -> https://www.estructura-est.com
-      - traefik.http.middlewares.www-nohyphen-to-www-hyphen.redirectregex.regex=^https://www\.estructuraest\.com(.*)
+      - traefik.http.middlewares.www-nohyphen-to-www-hyphen.redirectregex.regex=^https?://www\.estructuraest\.com(.*)
       - traefik.http.middlewares.www-nohyphen-to-www-hyphen.redirectregex.replacement=https://www.estructura-est.com$$1
       - traefik.http.middlewares.www-nohyphen-to-www-hyphen.redirectregex.permanent=true
       - traefik.http.routers.r-https-www-nohyphen.rule=Host(`www.estructuraest.com`)
